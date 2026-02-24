@@ -3,7 +3,7 @@ package QuantityMeasurement.QuantityMeasurementApp;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UC1FeetMeasurementTest {
+public class MeasurementEqualityTest {
 
     // UC1 - Feet Tests
     @Test
