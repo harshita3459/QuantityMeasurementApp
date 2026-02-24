@@ -2,7 +2,7 @@ package QuantityMeasurement.QuantityMeasurementApp;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UC1FeetMeasurementTest {
+public class MeasurementEqualityTest {
 
     @Test
     void testEquality_SameValue() {
