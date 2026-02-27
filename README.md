@@ -62,7 +62,7 @@ For example:
 
 Ensures consistency with equals() method as per Java contract.
 
-### Key Concepts Applied
+## Key Concepts Applied
 
 - Encapsulation
 - Method overriding
@@ -71,6 +71,9 @@ Ensures consistency with equals() method as per Java contract.
 - Floating-point comparison handling
 - Object-oriented design fundamentals
 
-### Outcome
+## Outcome
 
 The system correctly performs value-based equality comparison for measurements expressed in feet.
+
+## Author
+Harshita Agrawal
