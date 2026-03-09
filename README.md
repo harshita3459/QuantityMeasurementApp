@@ -26,6 +26,12 @@ Each branch represents a progressive enhancement of the application.
 
 **Link:** [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC2-FeetAndInchesMeasurementEquality)
 
+### UC3 - Generic Quantity Class For DRY Principle
+
+**Branch:** feature/UC3-GenericQuantityClassForDRYPrinciple
+
+**Link:** [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC3-GenericQuantityClassForDRYPrinciple?authuser=0)
+
 ## UC1 – Feet Measurement Equality
 ### Objective
 
