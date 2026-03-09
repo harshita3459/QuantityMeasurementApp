@@ -94,7 +94,7 @@ For example:
 1.0 inch ≠ 2.0 inches → FALSE  
 
 ## Implementation Approach
-### 1. Created Feet and Inches Classes
+### 1. Created Feet and Inches, Classes
 
 - Each class stores a double value
 - The constructor initializes the value
@@ -159,6 +159,135 @@ The system now supports equality comparison between:
   - All equality contract rules are preserved.
   - The design remains clean and maintainable.
   - UC1 functionality remains fully intact and backward compatible.
+
+## UC3 – Generic Quantity Class for DRY Principle
+### Objective
+
+Refactor the existing Feet and Inches classes into a single generic QuantityLength class to eliminate code duplication and follow the DRY (Don't Repeat Yourself) principle.
+
+The system should represent any length measurement using a value and unit type while maintaining all equality functionality from UC1 and UC2.
+
+### Problem Statement
+
+In UC1 and UC2, separate classes (Feet and Inches) were used for each unit.
+Both classes had almost identical code, such as:
+
+- Similar constructors
+- Identical equals() implementations
+- Similar value handling logic
+- This violated the DRY principle and made the code harder to maintain.
+
+UC3 solves this by introducing a generic measurement class that can handle multiple units.
+
+Example:
+
+Quantity(1.0, FEET) = Quantity(12.0, INCHES) → TRUE
+
+Quantity(1.0, INCHES) = Quantity(1.0, INCHES) → TRUE
+
+## Implementation Approach
+### 1. Created a LengthUnit Enum
+An enum is used to define supported length units and their conversion factors relative to a base unit.
+Base unit chosen: Feet
+Supported units:
+
+- FEET
+- INCHES
+- YARDS
+- CENTIMETERS
+
+Each unit contains a conversion factor to feet.
+
+Example:
+
+- FEET → 1.0
+- INCHES → 1 / 12
+- YARDS → 3.0
+- CENTIMETERS → 0.0328084
+
+The enum also provides a method to convert values to the base unit.
+
+### 2. Created a Generic QuantityLength Class
+Instead of multiple classes, UC3 introduces a single class to represent all length measurements.
+The class contains:
+
+- double value
+- LengthUnit unit
+- Constructor validates:
+- Value must be numeric
+- Unit cannot be null
+
+This allows the system to represent measurements like:
+
+- Quantity(1.0, FEET)
+- Quantity(12.0, INCHES)
+- Quantity(3.0, YARDS)
+- Quantity(2.54, CENTIMETERS)
+
+### 3. Base Unit Conversion
+To compare measurements across different units, values are converted to the base unit (feet).
+
+Conversion is performed using the conversion factor defined in the enum.
+
+Example conversion:
+
+feetValue = value × conversionFactor
+
+This ensures that all measurements are compared using a common reference.
+
+### 4. Implemented Equality Logic
+The equals() method is overridden to perform value-based comparison.
+
+Equality logic ensures:
+
+- Reflexive property (object equals itself)
+- Null safety
+- Type safety
+- Cross-unit comparison using base unit conversion
+- Two objects are considered equal if their converted base unit values are the same.
+
+Example:
+
+1 Foot == 12 Inches
+1 Yard == 3 Feet
+
+### 5. Overrode hashCode()
+The hashCode() method is implemented using the converted base unit value.
+
+This ensures consistency with the equals() method and prevents issues when using objects in collections.
+
+### 6. Implemented toString() Method
+A custom toString() method provides a readable representation of the object.
+
+Example output:
+
+Quantity(1.0, feet)
+Quantity(12.0, inches)
+
+This improves debugging and logging readability.
+
+## Key Concepts Applied
+
+- DRY Principle (Don't Repeat Yourself)
+- Code refactoring
+- Enum usage for unit representation
+- Encapsulation
+- Abstraction
+- Object-oriented design principles
+- Value-based equality
+- Floating-point comparison handling
+- Equality contract (reflexive, symmetric, transitive, consistent)
+- Type safety
+- Scalable design for future units
+
+## Outcome
+
+- Code duplication between Feet and Inches classes is eliminated.
+- A single QuantityLength class now handles all length measurements.
+- Equality comparison works for multiple units.
+- The system becomes more maintainable and scalable.
+- All functionality from UC1 and UC2 remains fully supported.
+- New units can be added easily through the LengthUnit enum.
 
 ## Author
 Harshita Agrawal
