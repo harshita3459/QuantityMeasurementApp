@@ -12,240 +12,270 @@ This project follows a feature-based branching strategy, where each use case is 
 Each branch represents a progressive enhancement of the application.
 
 ## Branch Links
-UC1 – Feet Measurement Equality
+### UC1 – Feet Measurement Equality
+
 Branch: feature/UC1-FeetMeasurementEquality
 
-Link: Click here
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC1-FeetMeasurementEquality?authuser=0)
 
-UC2 – Feet and Inches Measurement Equality
+### UC2 – Feet and Inches Measurement Equality
+
 Branch: feature/UC2-FeetAndInchesMeasurementEquality
 
-Link: Click here
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC2-FeetAndInchesMeasurementEquality?authuser=0)
 
-UC3 - Generic Quantity Class For DRY Principle
+### UC3 - Generic Quantity Class For DRY Principle
+
 Branch: feature/UC3-GenericQuantityClassForDRYPrinciple
 
-Link: Click here
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC3-GenericQuantityClassForDRYPrinciple?authuser=0)
 
-## UC1 – Feet Measurement Equality
-### Objective
-Implement equality comparison for measurements in Feet.
+### UC4 - Extended Unit Support 
 
-The system should determine whether two length measurements in feet are equal based on their value.
+Branch: feature/UC4-ExtendedUnitSupport
 
-### Problem Statement
-Two length measurements with the same numeric value in feet should be considered equal.
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC4-ExtendedUnitSupport?authuser=0)
 
-For example:
+### UC5 - Unit-to-Unit Conversion
 
-1.0 feet = 1.0 feet → TRUE 1.0 feet ≠ 2.0 feet → FALSE
+Branch: feature/UC5-UnitToUnitConversion
 
-### Implementation Approach
-1. Created a Feet Class
-Stores a double value
-The constructor initializes the value
-Getter method to access the value
-2. Overrode equals() Method
-The equality logic ensures:
-Reflexive property (object equals itself)
-Null safety
-Type safety (only compare with Feet objects)
-Value-based comparison using Double.compare()
-3. Overrode hashCode()
-Ensures consistency with equals() method as per Java contract.
-### Key Concepts Applied
-Encapsulation
-Method overriding
-Equality contract
-Null safety
-Floating-point comparison handling
-Object-oriented design fundamentals
-### Outcome
-The system correctly performs value-based equality comparison for measurements expressed in feet.
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC5-UnitToUnitConversion?authuser=0)
 
-## UC2 – Feet and Inches Measurement Equality
-### Objective
-Extend the equality comparison to support measurements in both Feet and Inches.
+### UC6 - Addition of Two Length Units
 
-The system should determine whether two length measurements are equal, even if they are expressed in different units (Feet or Inches).
+Branch: feature/UC6-Addition-Of-Two-Length-Units
 
-### Problem Statement
-Two length measurements representing the same physical length should be considered equal, regardless of their unit.
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC6-Addition-Of-Two-Length-Units?authuser=0)
 
-For example:
+### UC7 - Addition with Target Unit Specification
 
-1.0 feet = 1.0 feet → TRUE
-1.0 inch = 1.0 inch → TRUE
-1.0 feet = 12.0 inches → TRUE
-1.0 feet ≠ 2.0 feet → FALSE
-1.0 inch ≠ 2.0 inches → FALSE
+Branch: feature/UC7-Addition-With-Target-Unit-Specification
 
-### Implementation Approach
-1. Created Feet and Inches, Classes
-Each class stores a double value
-The constructor initializes the value
-The getter method provides controlled access to the value
-Both classes encapsulate their own data
-2. Implemented Cross-Unit Equality Logic
-Overrode the equals() method in both classes
-Equality logic handles:
-Reflexive property (object equals itself)
-Null safety
-Type safety (only compare with supported measurement types)
-Same-unit comparison using Double.compare()
-Cross-unit comparison using conversion logic
-3. Conversion Logic
-To enable cross-unit comparison:
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC7-Addition-With-Target-Unit-Specification?authuser=0)
 
-1 Foot = 12 Inches
-During comparison:
+### UC8 - Refactoring Unit Enum to Standalone
 
-Feet can be converted to Inches
-OR
+Branch: feature/UC8-Refactoring-Unit-Enum-To-Standalone
 
-Inches can be converted to Feet
-Conversion is done before value comparison to ensure accuracy.
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC8-Refactoring-Unit-Enum-To-Standalone?authuser=0)
 
-Example conversion logic:
+### UC9 - Weight Measurement
 
-feetValue = inches / 12
+Branch: feature/UC9-Weight-Measurement
 
-inchesValue = feet × 12
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC9-Weight-Measurement?authuser=0)
 
-4. Overrode hashCode()
-Ensures consistency with equals()
-Maintains Java equality contract
-Prevents unexpected behavior in collections
-Key Concepts Applied
-Encapsulation
-Method overriding
-Cross-unit equality logic
-Equality contract (reflexive, symmetric, transitive, consistent)
-Null safety
-Type safety
-Floating-point comparison handling
-Unit conversion logic
-Object-oriented design principles
-### Outcome
-The system now supports equality comparison between:
+### UC10 - Generic Quantity Class with Unit Interface
 
-Feet ↔ Feet
-Inches ↔ Inches
-Feet ↔ Inches
-Equality logic is mathematically correct.
-All equality contract rules are preserved.
-The design remains clean and maintainable.
-UC1 functionality remains fully intact and backward compatible.
-## UC3 – Generic Quantity Class for DRY Principle
-### Objective
-Refactor the existing Feet and Inches classes into a single generic QuantityLength class to eliminate code duplication and follow the DRY (Don't Repeat Yourself) principle.
+Branch: feature/UC10-Generic-Quantity-Class-with-Unit-Interface-For-Multi-Category-Support
 
-The system should represent any length measurement using a value and unit type while maintaining all equality functionality from UC1 and UC2.
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC10-Generic-Quantity-Class-with-Unit-Interface-For-Multi-Category-Support?authuser=0)
 
-### Problem Statement
-In UC1 and UC2, separate classes (Feet and Inches) were used for each unit. Both classes had almost identical code, such as:
+### UC11 - Volume Measurement Equality
 
-Similar constructors
-Identical equals() implementations
-Similar value handling logic
-This violated the DRY principle and made the code harder to maintain.
-UC3 solves this by introducing a generic measurement class that can handle multiple units.
+Branch: feature/UC11-Volume-Measurement-Equality
 
-Example:
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC11-Volume-Measurement-Equality?authuser=0)
 
-Quantity(1.0, FEET) = Quantity(12.0, INCHES) → TRUE
+### UC12 - Subtraction and Division Operations
 
-Quantity(1.0, INCHES) = Quantity(1.0, INCHES) → TRUE
+Branch: feature/UC12-Subtraction-and-Division-Operations-on-Quantity-Measurements
 
-### Implementation Approach
-1. Created a LengthUnit Enum
-An enum is used to define supported length units and their conversion factors relative to a base unit. Base unit chosen: Feet Supported units:
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC12-Subtraction-and-Division-Operations-on-Quantity-Measurements?authuser=0)
 
-FEET
-INCHES
-YARDS
-CENTIMETERS
-Each unit contains a conversion factor to feet.
+### UC13 - Centralized Arithmetic Logic to Enforce DRY
 
-Example:
+Branch: feature/UC13-Centralized-Arithmetic-Logic-to-Enforce-DRY-in-Quantity-Operations
 
-FEET → 1.0
-INCHES → 1 / 12
-YARDS → 3.0
-CENTIMETERS → 0.0328084
-The enum also provides a method to convert values to the base unit.
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC13-Centralized-Arithmetic-Logic-to-Enforce-DRY-in-Quantity-Operations?authuser=0)
 
-2. Created a Generic QuantityLength Class
-Instead of multiple classes, UC3 introduces a single class to represent all length measurements. The class contains:
+### UC14 - Temperature Measurement with Selective Arithmetic Support
 
-double value
-LengthUnit unit
-Constructor validates:
-Value must be numeric
-Unit cannot be null
-This allows the system to represent measurements like:
+Branch: feature/UC14-Temperature-Measurement-with-Selective-Arithmetic-Support-and-Measurable-Refactoring
 
-Quantity(1.0, FEET)
-Quantity(12.0, INCHES)
-Quantity(3.0, YARDS)
-Quantity(2.54, CENTIMETERS)
-3. Base Unit Conversion
-To compare measurements across different units, values are converted to the base unit (feet).
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC14-TemperaturE-Measurement-with-Selective-Arithmetic-Support-and-Measurable-Refactoring?authuser=0)
 
-Conversion is performed using the conversion factor defined in the enum.
+### UC15 - N-Tier Architecture Refactoring
 
-Example conversion:
+Branch: feature/UC15-N-Tier
 
-feetValue = value × conversionFactor
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC15-N-Tier?authuser=0)
 
-This ensures that all measurements are compared using a common reference.
+### UC16 - Database Integration with JDBC
 
-4. Implemented Equality Logic
-The equals() method is overridden to perform value-based comparison.
+Branch: feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
 
-Equality logic ensures:
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence?authuser=0)
 
-Reflexive property (object equals itself)
-Null safety
-Type safety
-Cross-unit comparison using base unit conversion
-Two objects are considered equal if their converted base unit values are the same.
-Example:
+### UC17 - Spring Backend for Quantity Measurement
 
-1 Foot == 12 Inches 1 Yard == 3 Feet
+Branch: feature/UC17-Spring-Backend-for-Quantity-Measurement
 
-5. Overrode hashCode()
-The hashCode() method is implemented using the converted base unit value.
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC17-Spring-Backend-for-Quantity-Measurement?authuser=0)
 
-This ensures consistency with the equals() method and prevents issues when using objects in collections.
+### UC18 - Spring Backend for Quantity Measurement
 
-6. Implemented toString() Method
-A custom toString() method provides a readable representation of the object.
+Branch: feature/UC18-Google-Authentication-and-User-Management-for-Quantity-Measurement
 
-Example output:
+Link: [Click here](https://github.com/harshita3459/QuantityMeasurementApp/tree/feature/UC18-Google-Authnetication-and-User-Management-for-Quantity-Measurement?authuser=0)
 
-Quantity(1.0, feet) Quantity(12.0, inches)
+## Project Structure 
+```
+src/main/java/com/app/quantitymeasurement/
 
-This improves debugging and logging readability.
+├── controller/        # REST APIs
+├── service/           # Business logic
+├── repository/        # Database layer
+├── entity/            # JPA entities
+├── dto/               # Request/Response objects
+├── model/             # Core quantities (units)
+├── security/          # JWT & OAuth configuration
+├── exception/         # Custom exceptions
+├── config/            # Spring configuration
+└── util/              # Utility classes
+```
 
-### Key Concepts Applied
-DRY Principle (Don't Repeat Yourself)
-Code refactoring
-Enum usage for unit representation
-Encapsulation
-Abstraction
-Object-oriented design principles
-Value-based equality
-Floating-point comparison handling
-Equality contract (reflexive, symmetric, transitive, consistent)
-Type safety
-Scalable design for future units
-### Outcome
-Code duplication between Feet and Inches classes is eliminated.
-A single QuantityLength class now handles all length measurements.
-Equality comparison works for multiple units.
-The system becomes more maintainable and scalable.
-All functionality from UC1 and UC2 remains fully supported.
-New units can be added easily through the LengthUnit enum.
+## Use Case (UC) Breakdown
+## UC1 – Feet Equality
+
+- Implemented the basic functionality to compare two quantities measured in feet.
+- This ensured that values with the same unit could be validated for equality.
+- It served as the foundation for building more complex unit comparisons.
+
+## UC2 – Inch Equality
+
+- Extended the equality comparison logic to support inch measurements.
+- Allowed accurate comparison between quantities expressed in inches.
+- Helped generalize the equality mechanism beyond a single unit type.
+
+## UC3 – Generic Length Equality
+
+- Introduced a generic approach to compare different length units like feet and inches.
+- Handled internal conversion before performing equality checks.
+- Improved flexibility by allowing cross-unit comparisons within the same category.
+
+## UC4 – Yard Equality
+
+- Added support for yard as a new unit in the length category.
+- Integrated the yard into the existing comparison and conversion logic.
+- Ensured seamless equality checks across feet, inches, and yards.
+
+## UC5 – Unit Conversion
+
+- Implemented logic to convert values between compatible units.
+- Used predefined conversion factors to maintain accuracy.
+- Enabled operations like feet to inches and vice versa.
+
+## UC6 – Addition of Quantities
+
+- Developed functionality to add two quantities of the same category.
+- Handled automatic conversion to a common unit before performing addition.
+- Ensured accurate results irrespective of input units.
+
+## UC7 – Target Unit Addition
+
+- Enhanced addition operation by allowing results in a specified target unit.
+- Converted both operands into the desired unit before computing the result.
+- Improved usability by giving control over the output format.
+
+## UC8 – Standalone Units
+
+- Refactored the system to treat units as independent components.
+- Improved modularity and reduced tight coupling between units.
+- Made the system easier to extend with new measurement types.
+
+## UC9 – Weight Measurement
+
+- Introduced weight measurement category, including kilograms and grams. Enabled comparison, conversion, and arithmetic operations for weight units.
+- Extended system capability beyond length measurements.
+
+## UC10 – Generic Quantity Class
+
+- Designed a reusable generic quantity class using interfaces.
+- Allowed different unit types to be handled in a unified way.
+- Improved code reusability and type safety across categories.
+
+## UC11 – Volume Measurement
+
+- Added support for volume units and their respective operations.
+- Enabled conversion and comparison within the volume category.
+- Further expanded the system to handle multiple measurement domains.
+
+## UC12 – Subtraction & Division
+
+- Implemented subtraction and division operations for quantities.
+- Ensured operations are performed only on compatible unit types.
+- Handled conversions internally to maintain accuracy.
+
+## UC13 – Centralized Logic
+
+- Refactored arithmetic operations into a centralized logic layer.
+- Reduced code duplication and improved maintainability.
+- Followed DRY (Don't Repeat Yourself) principles effectively.
+
+## UC14 – Temperature Handling
+
+- Introduced temperature measurement with special conversion logic.
+- Restricted arithmetic operations were not logically valid.
+- Handled edge cases like Celsius to Fahrenheit conversion.
+
+## UC15 – N-Tier Architecture
+
+- Structured the application into Controller, Service, and Repository layers.
+- Ensured proper separation of concerns across the system.
+- Improved scalability, readability, and maintainability of the codebase.
+
+## UC16 – Database Integration
+
+- Integrated database support using Spring Data JPA.
+- Enabled persistent storage of measurement data.
+- Supported both H2 (development) and MySQL (production).
+
+## UC17 – Spring Framework Integration
+
+- Leveraged Spring Boot features for dependency injection and configuration. 
+- Simplified application setup and reduced boilerplate code.
+- Improved overall development efficiency and structure.
+
+## UC18 – OAuth Authentication
+
+- Implemented secure authentication using JWT and Google OAuth.
+- Allowed users to log in via an external authentication provider.
+- Enhanced application security and user management capabilities.
+
+## Sample Request
+
+### Compare Quantities
+```
+{
+  "q1": { "value": 1, "unit": "FEET" },
+  "q2": { "value": 12, "unit": "INCH" }
+}
+```
+### Convert Units
+```
+{
+  "value": 100,
+  "fromUnit": "CENTIMETER",
+  "toUnit": "METER"
+}
+```
+## Concepts Used
+- Object-Oriented Programming (OOP)
+- Generics in Java
+- Interface-based design
+- REST API design
+- Dependency Injection (DI)
+- Spring Security (JWT + OAuth)
+- JPA & ORM Mapping
+
+## Challenges Solved
+- Designing a generic unit system for multiple categories
+- Handling accurate unit conversions
+- Ensuring type-safe arithmetic operations
+- Implementing secure authentication flow
+- Structuring project using clean architecture
+
 ## Author
 Harshita Agrawal
