@@ -32,16 +32,18 @@ public class SecurityConfig {
             .sessionManagement(s ->
                 s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(a -> a
-                .requestMatchers(
-                    "/api/auth/signup",
-                    "/api/auth/login",
-                    "/api/auth/validate",
-                    "/swagger-ui/**",
-                    "/swagger-ui.html",
-                    "/v3/api-docs/**",
-                    "/v3/api-docs",
-                    "/api-docs/**")
-                .permitAll()
+            		.requestMatchers(
+            			    "/",
+            			    "/error",   // VERY IMPORTANT (Spring error page)
+            			    "/api/auth/signup",
+            			    "/api/auth/login",
+            			    "/api/auth/validate",
+            			    "/swagger-ui/**",
+            			    "/swagger-ui.html",
+            			    "/v3/api-docs/**",
+            			    "/v3/api-docs",
+            			    "/api-docs/**"
+            			).permitAll()
                 .anyRequest().authenticated())
             .addFilterBefore(jwtFilter,
                 UsernamePasswordAuthenticationFilter.class)
