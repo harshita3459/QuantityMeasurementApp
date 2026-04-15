@@ -1,36 +1,27 @@
 server:
-  port: 8082
+  port: ${PORT:8082}
 
 spring:
   application:
     name: qma-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/quantity_service_db
-    username: root
-    password: hag11990
+    url: ${DB_URL:jdbc:mysql://localhost:3306/quantity_service_db}
+    username: ${DB_USER:root}
+    password: ${DB_PASS:hag11990}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      timeout: 2000ms
-
   cache:
-    type: redis
-    redis:
-      time-to-live: 600000
+    type: ${CACHE_TYPE:none}
 
-  # FIX: correct indentation — was broken (allow-bean-definition-overriding was outside spring.main)
   main:
     allow-bean-definition-overriding: true
 
@@ -38,14 +29,16 @@ eureka:
   client:
     enabled: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
     register-with-eureka: true
     fetch-registry: true
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
+    hostname: ${RENDER_EXTERNAL_HOSTNAME:localhost}
+    instance-id: ${RENDER_EXTERNAL_HOSTNAME:localhost}:${spring.application.name}:${PORT:8082}
 
 jwt:
-  secret: QMASecretKey2024QMASecretKey2024QM
+  secret: ${JWT_SECRET:QMASecretKey2024QMASecretKey2024QM}
 
 springdoc:
   api-docs:
@@ -56,3 +49,12 @@ springdoc:
     tagsSorter: alpha
     tryItOutEnabled: true
     filter: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

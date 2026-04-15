@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 spring:
   application:
@@ -11,6 +11,7 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
+              - "${FRONTEND_URL:http://localhost:5173}"
               - "http://localhost:5173"
               - "http://localhost:3000"
             allowedMethods:
@@ -24,31 +25,31 @@ spring:
             allowCredentials: true
 
       routes:
-        # Auth routes — PUBLIC
+        # Auth routes — PUBLIC (no JWT filter)
         - id: auth-service
-          uri: lb://AUTH-SERVICE
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
           predicates:
             - Path=/api/auth/**
 
-        # QMA routes — PROTECTED
+        # QMA routes — PROTECTED (JWT filter applied)
         - id: qma-service
-          uri: lb://QMA-SERVICE
+          uri: ${QMA_SERVICE_URL:http://localhost:8082}
           predicates:
             - Path=/api/v1/**
           filters:
             - name: JwtAuthFilter
 
-        # ✅ Swagger docs (FIX)
+        # Swagger docs passthrough
         - id: qma-swagger-docs
-          uri: lb://QMA-SERVICE
+          uri: ${QMA_SERVICE_URL:http://localhost:8082}
           predicates:
             - Path=/v3/api-docs,/v3/api-docs/**
           filters:
             - StripPrefix=0
 
-        # ✅ Swagger UI (FIX)
+        # Swagger UI passthrough
         - id: qma-swagger-ui
-          uri: lb://QMA-SERVICE
+          uri: ${QMA_SERVICE_URL:http://localhost:8082}
           predicates:
             - Path=/swagger-ui.html,/swagger-ui/**
           filters:
@@ -57,18 +58,19 @@ spring:
       default-filters:
         - PreserveHostHeader
 
+# Eureka still used for info/dashboard — not for routing anymore
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
     register-with-eureka: true
     fetch-registry: true
-
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
+    hostname: ${RENDER_EXTERNAL_HOSTNAME:localhost}
 
 jwt:
-  secret: QMASecretKey2024QMASecretKey2024QM
+  secret: ${JWT_SECRET:QMASecretKey2024QMASecretKey2024QM}
 
 management:
   endpoints:
