@@ -1,25 +1,23 @@
 server:
-  port: 8081
+  port: ${PORT:8081}
 
 spring:
   application:
     name: auth-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/authservice_db
-    username: root
-    password: hag11990
+    url: ${DB_URL:jdbc:mysql://localhost:3306/authservice_db}
+    username: ${DB_USER:root}
+    password: ${DB_PASS:hag11990}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQLDialect
 
-  # OAuth2 is kept but login via Google on frontend uses /signup+/login flow
-  # If you want full server-side OAuth2 redirect, configure redirect-uri in Google Console
   security:
     oauth2:
       client:
@@ -32,14 +30,16 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
     register-with-eureka: true
     fetch-registry: true
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
+    hostname: ${RENDER_EXTERNAL_HOSTNAME:localhost}
+    instance-id: ${RENDER_EXTERNAL_HOSTNAME:localhost}:${spring.application.name}:${PORT:8081}
 
 jwt:
-  secret: QMASecretKey2024QMASecretKey2024QM
+  secret: ${JWT_SECRET:QMASecretKey2024QMASecretKey2024QM}
   expiration: 3600000
 
 springdoc:
@@ -47,3 +47,12 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
