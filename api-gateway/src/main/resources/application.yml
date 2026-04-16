@@ -7,11 +7,13 @@ spring:
 
   cloud:
     gateway:
+      # ✅ CORS lives HERE and ONLY HERE
       globalcors:
+        add-to-simple-url-handler-mapping: true   # ← REQUIRED: makes OPTIONS preflight work
         cors-configurations:
           '[/**]':
             allowedOrigins:
-              - "${FRONTEND_URL:http://localhost:5173}"
+              - "https://quantitymeasurementapp-frontend-m8ll.onrender.com"
               - "http://localhost:5173"
               - "http://localhost:3000"
             allowedMethods:
@@ -23,6 +25,7 @@ spring:
             allowedHeaders:
               - "*"
             allowCredentials: true
+            maxAge: 3600
 
       routes:
         # Auth routes — PUBLIC (no JWT filter)
@@ -58,7 +61,6 @@ spring:
       default-filters:
         - PreserveHostHeader
 
-# Eureka still used for info/dashboard — not for routing anymore
 eureka:
   client:
     service-url:
