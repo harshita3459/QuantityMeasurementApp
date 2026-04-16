@@ -13,8 +13,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-//  REMOVED: CorsConfiguration, CorsConfigurationSource, UrlBasedCorsConfigurationSource, List
-//    CORS is handled entirely by API Gateway — having it here caused duplicate headers.
+// REMOVED all CORS imports and corsConfigurationSource() bean.
+// CORS is owned entirely by the API Gateway.
+// Having it here caused duplicate Access-Control-Allow-Origin headers.
+//
+// DELETED IMPORTS (do not re-add):
+// import org.springframework.web.cors.CorsConfiguration;
+// import org.springframework.web.cors.CorsConfigurationSource;
+// import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+// import java.util.List;
 
 @Configuration
 public class SecurityConfig {
@@ -31,12 +38,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-            // REMOVED: .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            //    Do NOT configure CORS here at all — Gateway handles it.
-            //    If you leave cors() configured in the auth service, Spring Security will add
-            //    its own Access-Control-Allow-Origin header on top of the Gateway's header,
-            //    producing the "contains multiple values" error in the browser.
-            .cors(cors -> cors.disable())   // ← Explicitly disable — let Gateway own CORS
+            // FIX: cors MUST be disabled here.
+            // spring-boot-starter-oauth2-client on the classpath causes Spring Security
+            // to auto-register a CorsFilter bean. If you call .cors() with any
+            // configuration here, that filter fires and adds its own
+            // Access-Control-Allow-Origin header on top of the Gateway's header.
+            // Result: browser sees 5 identical values and blocks the request.
+            .cors(cors -> cors.disable())
             .csrf(c -> c.disable())
             .sessionManagement(s ->
                 s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -47,9 +55,9 @@ public class SecurityConfig {
                     "/api/auth/signup",
                     "/api/auth/login",
                     "/api/auth/validate",
-                    "/login/oauth2/**",         //  OAuth2 redirect URIs must be permitted
-                    "/oauth2/**",               //  OAuth2 authorization endpoint
-                    "/api/auth/oauth2/success", //  Your OAuth2 success handler
+                    "/login/oauth2/**",          // OAuth2 redirect URIs
+                    "/oauth2/**",                // OAuth2 authorization endpoint
+                    "/api/auth/oauth2/success",  // Your OAuth2 success handler
                     "/swagger-ui/**",
                     "/swagger-ui.html",
                     "/v3/api-docs/**",
@@ -57,7 +65,6 @@ public class SecurityConfig {
                     "/api-docs/**"
                 ).permitAll()
                 .anyRequest().authenticated())
-            //  Re-enabled oauth2Login so Google OAuth actually works
             .oauth2Login(oauth2 -> oauth2
                 .defaultSuccessUrl("/api/auth/oauth2/success", true)
             )
@@ -77,7 +84,7 @@ public class SecurityConfig {
         return cfg.getAuthenticationManager();
     }
 
-    //  REMOVED: corsConfigurationSource() bean entirely.
-    //    Keeping it here — even without .cors() in the filter chain — risks Spring
-    //    auto-detecting and applying it. Delete the whole method.
+    // corsConfigurationSource() bean is DELETED.
+    // Do not add it back. Do not add @CrossOrigin to any controller.
+    // Any Spring-side CORS config will duplicate the Gateway's header.
 }
